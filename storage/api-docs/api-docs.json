@@ -1,0 +1,278 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "APIs For Edelways project",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/create-account": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create new user",
+                "description": "Returns user data",
+                "operationId": "createUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login user",
+                "description": "Returns user tocken",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserToken"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/sign-out": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Logout user",
+                "description": "Returns success message",
+                "operationId": "logoutUser",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user information",
+                "description": "Returns user data",
+                "operationId": "getUserData",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateUserRequest": {
+                "title": "Create user request",
+                "description": "Create user request body data",
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "password_confirmation",
+                    "image"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new user",
+                        "type": "string",
+                        "example": "Roman Gurniy"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email of the new user",
+                        "type": "string",
+                        "example": "roman@gmail.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password of the new user",
+                        "type": "string",
+                        "example": "secret123A"
+                    },
+                    "password_confirmation": {
+                        "title": "Password confirm",
+                        "description": "Password confirmation",
+                        "type": "string",
+                        "example": "secret123A"
+                    },
+                    "image": {
+                        "title": "Image",
+                        "description": "Path to image on the server",
+                        "type": "string",
+                        "example": "/images/uploads/customer/6244ca3e9c790_logo-nike-1971.png"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginUserRequest": {
+                "title": "Login user request",
+                "description": "Login user request body data",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "Email",
+                        "description": "Email of the user",
+                        "type": "string",
+                        "example": "roman@gmail.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password of the user",
+                        "type": "string",
+                        "example": "secret123A"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "User",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new user",
+                        "type": "string",
+                        "example": "Roman Gurniy"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email of the new user",
+                        "type": "string",
+                        "example": "roman@gmail.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password of the new user",
+                        "type": "string",
+                        "example": "secret123A"
+                    },
+                    "image": {
+                        "title": "Image",
+                        "description": "Path to image on the server",
+                        "type": "string",
+                        "example": "/images/uploads/customer/6244ca3e9c790_logo-nike-1971.png"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "UserToken": {
+                "title": "User Token",
+                "description": "User token for auth",
+                "properties": {
+                    "token": {
+                        "title": "Token",
+                        "description": "Token for auth",
+                        "type": "string",
+                        "example": "5|tUA9GsFtBSNjZFq3rxYXb3BAk9A44NmBha7rl7iB"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Token"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
