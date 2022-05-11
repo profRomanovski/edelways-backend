@@ -28,6 +28,6 @@ class UploadController extends Controller
 
         $file->move($path, $name);
 
-        return response()->json(['path' => '/images/uploads/'.$data['dirName'].$name]);
+        return response()->json(['path' => '/images/uploads/'.$data['dirName'].'/'.$name]);
     }
 }
