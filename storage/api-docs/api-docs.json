@@ -136,10 +136,225 @@
                     }
                 ]
             }
+        },
+        "/api/create-group": {
+            "post": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Create new group",
+                "description": "Returns group data",
+                "operationId": "createGroup",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateGroupRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Group"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/groups": {
+            "get": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Get group information",
+                "description": "Returns groups data",
+                "operationId": "getGroupsData",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filter all or my groups",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Group"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/join-group": {
+            "post": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Join to group",
+                "description": "Returns success or not",
+                "operationId": "joinGroup",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JoinGroupRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Group"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Group not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/delete-group": {
+            "post": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Delete group",
+                "description": "Returns success",
+                "operationId": "deleteGroup",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteGroupRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Group not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/left-group": {
+            "post": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Left group",
+                "description": "Returns success",
+                "operationId": "leftGroup",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteGroupRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Group not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
         }
     },
     "components": {
         "schemas": {
+            "CreateGroupRequest": {
+                "title": "Create group request",
+                "description": "Create group request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new group",
+                        "type": "string",
+                        "example": "Java"
+                    }
+                },
+                "type": "object"
+            },
             "CreateUserRequest": {
                 "title": "Create user request",
                 "description": "Create user request body data",
@@ -184,6 +399,38 @@
                 },
                 "type": "object"
             },
+            "DeleteGroupRequest": {
+                "title": "Delete request",
+                "description": "Delete group request body data",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "description": "Id of the group",
+                        "type": "integer",
+                        "example": "3"
+                    }
+                },
+                "type": "object"
+            },
+            "JoinGroupRequest": {
+                "title": "Join group request",
+                "description": "Join group request",
+                "required": [
+                    "code"
+                ],
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "description": "Code of the group",
+                        "type": "string",
+                        "example": "NJHGYTD"
+                    }
+                },
+                "type": "object"
+            },
             "LoginUserRequest": {
                 "title": "Login user request",
                 "description": "Login user request body data",
@@ -206,6 +453,53 @@
                     }
                 },
                 "type": "object"
+            },
+            "Group": {
+                "title": "Group",
+                "description": "Group",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new group",
+                        "type": "string",
+                        "example": "Java"
+                    },
+                    "code": {
+                        "title": "Code",
+                        "description": "Random code to connect to group",
+                        "type": "string",
+                        "example": "GHDFDBU"
+                    },
+                    "user_id": {
+                        "title": "User id",
+                        "description": "Id of user who created this group",
+                        "type": "string",
+                        "example": "23"
+                    },
+                    "users": {
+                        "title": "Users",
+                        "description": "Count of joined uses",
+                        "type": "integer",
+                        "example": "12"
+                    },
+                    "author": {
+                        "title": "Author",
+                        "description": "Name of author",
+                        "type": "string",
+                        "example": "Roman Gurniy"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Group"
+                }
             },
             "User": {
                 "title": "User",
