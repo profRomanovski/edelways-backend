@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Service\GroupService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class GroupController extends Controller
 {
@@ -82,7 +81,7 @@ class GroupController extends Controller
      *      ),
      * )
      */
-    public function get(Request $request)
+    public function list(Request $request)
     {
         return $this->groupService->getGroupByFilter($request->get('filter'));
     }
@@ -202,5 +201,49 @@ class GroupController extends Controller
             return response( $ex->getMessage(), 404);
         }
         return response('success');
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/group",
+     *      operationId="getGroupData",
+     *      tags={"Groups"},
+     *      summary="Get group information",
+     *      description="Returns group data",
+     *      security={{"bearer_token":{}}},
+     *         @OA\Parameter(
+     *          name="id",
+     *          description="Group id",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Group")
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Group not found"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     * )
+     */
+    public function get(Request $request)
+    {
+        $data = $request->validate([
+            'id' => 'required|integer|min:1',
+        ]);
+        try{
+            return $this->groupService->get($data['id']);
+        } catch (Exception $ex){
+            return response( $ex->getMessage(), 404);
+        }
     }
 }

@@ -106,19 +106,41 @@ class GroupService
         $group->delete();
     }
 
+    /**
+     * @throws Exception
+     */
     public function leftGroup(int $id)
     {
         $group = Group::query()->find($id);
-        if(!$group){
-            throw new Exception("Дану групу не знайдено");
-        }
+        $this->validate($group);
+
         $groupUser = GroupUsers::query()
             ->where(GroupUsers::GROUP_ID, '=', $id)
             ->where(GroupUsers::USER_ID,'=', auth()->user()->id)
             ->first();
-        if(!$groupUser){
+        $groupUser->delete();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function get($id)
+    {
+        $group = Group::query()->find($id);
+        $this->validate($group);
+        return $group;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function validate($group)
+    {
+        if(!$group){
+            throw new Exception("Групу не знайдено");
+        }
+        if(!$group->canAccess && !$group->isAdmin){
             throw new Exception("Ви не входите в цю групу");
         }
-        $groupUser->delete();
     }
 }

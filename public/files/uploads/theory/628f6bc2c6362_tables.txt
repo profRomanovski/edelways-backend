@@ -1,0 +1,63 @@
+There are all tables, which include of customer data and their column names.
+
+customer_address_entity
+  city, company, fax, firstname, lastname, middlename, postcode,
+  prefix, region, street, suffix, telephone
+customer_entity
+  email, firstname, middlename, lastname, suffix, dob
+customer_grid_flat
+  name, email, dob, shipping_full, billing_full, billing_firstname,
+  billing_lastname, billing_telephone, billing_postcode,
+  billing_region, billing_country_id, billing_street, billing_city,
+  billing_fax, billing_company
+email_abandoned_cart
+  email, abandoned_cart_number
+email_automation
+  email
+email_campaign
+  email
+email_contact
+  email, email_imported, subscriber_imported
+email_contact_consent
+  consent_user_agent
+email_coupon_attribute
+  email
+email_order
+  email_imported
+email_sms_order_queue
+  phone_number, enail, additional_data
+integration
+  email
+newsletter_queue
+  newsletter_sender_name,  newsletter_sender_email
+newsletter_subscriber
+  subscriber_email, subscriber_status, subscriber_confirm_code
+quote
+  customer_email, customer_prefix, customer_firstname,
+  customer_middlename, customer_lastname, customer_suffix,
+  customer_dob, customer_note
+quote_address
+  customer_address_id, address_type, email, prefix, firstname,
+  middlename, lastname, suffix, company, street, city, region, postcode,
+  telephone, fax, shipping_method, shipping_description
+sales_creditmemo_grid
+  billing_name, state, billing_address, shipping_address, customer_email,
+  payment_method, shipping_information
+sales_invoice
+  email_sent, send_email
+sales_invoice_grid
+  customer_name, customer_email, payment_method, billing_name,
+  billing_address, shipping_address
+sales_order
+  customer_dob, customer_email, customer_firstname,
+  customer_lastname, customer_middlename, customer_prefix,
+  customer_suffix, customer_taxvat, shipping_method
+sales_order_address
+  fax, region, postcode, lastname, street, city, email, telephone,
+  firstname, address_type, prefix, middlename, suffix, company
+sales_order_grid
+  shipping_name, billing_name, billing_address, shipping_address,
+  shipping_information, customer_email, customer_name, payment_method
+sales_shipment_grid
+  customer_name, billing_address, shipping_address, billing_name,
+  shipping_name, customer_email, payment_method, shipping_information

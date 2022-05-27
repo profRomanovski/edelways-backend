@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property $code
  * @property $user_id
  * @property $id
+ * @property $canAccess
+ * @property $isAdmin
  */
 class Group extends Model
 {
@@ -36,7 +39,9 @@ class Group extends Model
 
     protected $appends = [
         'users',
-        'author'
+        'author',
+        'isAdmin',
+        'canAccess'
     ];
 
     public function user()
@@ -53,4 +58,27 @@ class Group extends Model
     {
         return $this->user->name;
     }
+
+    public function getIsAdminAttribute(): bool
+    {
+        $isAdmin = false;
+        if($this->user_id === auth()->user()->id){
+            $isAdmin = true;
+        }
+        return $isAdmin;
+    }
+
+    public function getCanAccessAttribute(): bool
+    {
+        $canAccess = false;
+        $groupUser = GroupUsers::query()
+            ->where(GroupUsers::GROUP_ID,'=',$this->id)
+            ->where(GroupUsers::USER_ID, '=', auth()->user()->id)
+            ->first();
+        if($groupUser){
+            $canAccess = true;
+        }
+        return $canAccess;
+    }
+
 }
