@@ -25,10 +25,13 @@ class TheoryService
      * @param $groupId
      * @param $documentPath
      * @return Builder|Model
+     * @throws Exception
      */
     public function createTheory($name, $groupId, $documentPath)
     {
         $userId = auth()->user()->id;
+        $group = Group::query()->find($groupId);
+        $this->groupService->validate($group);
         return Theory::query()->create([
            Theory::NAME => $name,
            Theory::GROUP_ID => $groupId,

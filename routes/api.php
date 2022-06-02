@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompleteController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskReviewController;
 use App\Http\Controllers\TheoryController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
@@ -25,5 +28,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-theory', [TheoryController::class, 'create']);
     Route::get('/theory', [TheoryController::class, 'get']);
     Route::post('/delete-theory', [TheoryController::class, 'delete']);
+    Route::get('/tasks', array(TaskController::class, 'list'));
+    Route::post('/create-task', [TaskController::class, 'create']);
+    Route::get('/task', array(TaskController::class, 'get'));
+    Route::post('/complete-task', [CompleteController::class, 'create']);
+    Route::get('/completes', array(CompleteController::class, 'list'));
+    Route::get('/complete', array(CompleteController::class, 'get'));
+    Route::post('/review-task', [TaskReviewController::class, 'create']);
 
 });

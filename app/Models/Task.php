@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use function Symfony\Component\Translation\t;
 
 /**
  * @property $id
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $name
  * @property $document_path
  * @property $description
+ * @property $mark
  */
 class Task extends Model
 {
@@ -22,15 +24,71 @@ class Task extends Model
     const GROUP_ID = 'group_id';
     const NAME = 'name';
     const DESCRIPTION = 'description';
-    const DOCUMENT_PATH = 'document-path';
+    const DOCUMENT_PATH = 'document_path';
+    const MARK = 'mark';
 
     protected $fillable = [
         self::GROUP_ID,
         self::USER_ID,
         self::DOCUMENT_PATH,
         self::NAME,
-        self::DESCRIPTION
+        self::DESCRIPTION,
+        self::MARK
     ];
 
+    protected $appends = [
+        'author',
+        'date',
+        'isAdmin',
+        'complete'
+    ];
 
+    protected $hidden = [
+        'user',
+        'group',
+        'taskCompletes'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function completes()
+    {
+        return $this->hasMany(TaskComplete::class);
+    }
+
+    public function getCompleteAttribute()
+    {
+        return $this->completes()
+            ->where(TaskComplete::USER_ID, '=', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
+
+    public function getAuthorAttribute()
+    {
+        return $this->user->name;
+    }
+
+    public function getDateAttribute()
+    {
+        return $this->created_at->format('F j, Y');
+    }
+
+    public function getIsAdminAttribute(): bool
+    {
+        $group = Group::query()->find($this->group_id);
+        if($group->isAdmin){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

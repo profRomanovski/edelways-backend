@@ -48,11 +48,15 @@ class TheoryController extends Controller
             'group_id' => 'required|integer|min:1',
             'document_path' => 'required|string|max:255|min:3',
         ]);
-        return $this->theoryService->createTheory(
-            $data['name'],
-            $data['group_id'],
-            $data['document_path']
-        );
+        try {
+            return $this->theoryService->createTheory(
+                $data['name'],
+                $data['group_id'],
+                $data['document_path']
+            );
+        } catch (Exception $e) {
+            return response( $e->getMessage(), 404);
+        }
     }
 
     /**

@@ -24,17 +24,6 @@ class CreateTheoryRequest
 
     /**
      * @OA\Property(
-     *      title="User id",
-     *      description="Id of user who created this group",
-     *      example="23"
-     * )
-     *
-     * @var string
-     */
-    public $user_id;
-
-    /**
-     * @OA\Property(
      *      title="Group ID",
      *      description="Id of group",
      *      example="12"

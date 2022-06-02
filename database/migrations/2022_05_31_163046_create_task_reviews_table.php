@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTasksTable extends Migration
+class CreateTaskReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('task_reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->unsignedInteger('group_id')->nullable(false);
             $table->unsignedInteger('user_id')->nullable(false);
-            $table->string('description');
+            $table->unsignedInteger('complete_id')->nullable(false);
+            $table->string('comment');
             $table->unsignedInteger('mark');
-            $table->string('document_path')->nullable(true);
-            $table->timestamps();
-            $table->foreign('group_id')->references('id')->on('groups')
+            $table->foreign('complete_id')->references('id')->on('task_completes')
                 ->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 
@@ -35,6 +33,6 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('task_reviews');
     }
 }

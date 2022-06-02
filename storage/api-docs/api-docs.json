@@ -137,6 +137,134 @@
                 ]
             }
         },
+        "/api/complete-task": {
+            "post": {
+                "tags": [
+                    "Completes"
+                ],
+                "summary": "Complete the task",
+                "description": "Returns task data",
+                "operationId": "completeTask",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CompleteTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskComplete"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/completes": {
+            "get": {
+                "tags": [
+                    "Completes"
+                ],
+                "summary": "Get completes list",
+                "description": "Returns completes list",
+                "operationId": "getTasksCompletes",
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "query",
+                        "description": "Id of related task",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskComplete"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/complete": {
+            "get": {
+                "tags": [
+                    "Completes"
+                ],
+                "summary": "Get complete information",
+                "description": "Returns complete data",
+                "operationId": "getCompleteData",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Complete id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskComplete"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
         "/api/create-group": {
             "post": {
                 "tags": [
@@ -380,6 +508,174 @@
                 ]
             }
         },
+        "/api/tasks": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get tasks list",
+                "description": "Returns tasks list",
+                "operationId": "getTasksData",
+                "parameters": [
+                    {
+                        "name": "group_id",
+                        "in": "query",
+                        "description": "Id of related group",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/create-task": {
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Create new task",
+                "description": "Returns task data",
+                "operationId": "createTask",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/task": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get task information",
+                "description": "Returns task data",
+                "operationId": "getTaskData",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/review-task": {
+            "post": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Review the task",
+                "description": "Returns task data",
+                "operationId": "reviewTask",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReviewTaskRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskReview"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
         "/api/create-theory": {
             "post": {
                 "tags": [
@@ -547,6 +843,29 @@
     },
     "components": {
         "schemas": {
+            "CompleteTaskRequest": {
+                "title": "Complete Task request",
+                "description": "Complete Task request body data",
+                "required": [
+                    "task_id",
+                    "document_path"
+                ],
+                "properties": {
+                    "document_path": {
+                        "title": "Document path",
+                        "description": "Path of document which contain the work",
+                        "type": "string",
+                        "example": "/documents/completes/doc1.dox"
+                    },
+                    "task_id": {
+                        "title": "Task ID",
+                        "description": "Id of task",
+                        "type": "integer",
+                        "example": "14"
+                    }
+                },
+                "type": "object"
+            },
             "CreateGroupRequest": {
                 "title": "Create group request",
                 "description": "Create group request body data",
@@ -559,6 +878,50 @@
                         "description": "Name of the new group",
                         "type": "string",
                         "example": "Java"
+                    }
+                },
+                "type": "object"
+            },
+            "CreateTaskRequest": {
+                "title": "Create Task request",
+                "description": "Create Task request body data",
+                "required": [
+                    "name",
+                    "user_id",
+                    "group_id",
+                    "description"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new Task",
+                        "type": "string",
+                        "example": "Java exam"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the new Task",
+                        "type": "string",
+                        "example": "Pass the exam"
+                    },
+                    "group_id": {
+                        "title": "Group ID",
+                        "description": "Id of group",
+                        "type": "integer",
+                        "example": "12"
+                    },
+                    "document_path": {
+                        "title": "Document path",
+                        "description": "Path of document on the server",
+                        "type": "string",
+                        "example": "/theory/file.docx"
+                    },
+                    "mark": {
+                        "title": "Mark",
+                        "description": "Max mark",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 12
                     }
                 },
                 "type": "object"
@@ -578,12 +941,6 @@
                         "description": "Name of the new group",
                         "type": "string",
                         "example": "Java"
-                    },
-                    "user_id": {
-                        "title": "User id",
-                        "description": "Id of user who created this group",
-                        "type": "string",
-                        "example": "23"
                     },
                     "group_id": {
                         "title": "Group ID",
@@ -746,6 +1103,148 @@
                     "name": "Group"
                 }
             },
+            "Task": {
+                "title": "Task",
+                "description": "Task",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new Task",
+                        "type": "string",
+                        "example": "Java exam"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the new Task",
+                        "type": "string",
+                        "example": "Pass the exam"
+                    },
+                    "user_id": {
+                        "title": "User id",
+                        "description": "Id of user who created this Task",
+                        "type": "string",
+                        "example": "23"
+                    },
+                    "group_id": {
+                        "title": "Group ID",
+                        "description": "Id of group",
+                        "type": "integer",
+                        "example": "12"
+                    },
+                    "document_path": {
+                        "title": "Document path",
+                        "description": "Path of document on the server",
+                        "type": "string",
+                        "example": "/theory/file.docx"
+                    },
+                    "author": {
+                        "title": "Author",
+                        "description": "Author of Task",
+                        "type": "string",
+                        "example": "Roman Gurniy"
+                    },
+                    "date": {
+                        "title": "Date",
+                        "description": "Date of created the Task",
+                        "type": "string",
+                        "example": "March 10, 2022"
+                    },
+                    "isAdmin": {
+                        "title": "IsAdmin",
+                        "description": "Returns true is user is admin of this Task",
+                        "type": "string",
+                        "example": "true"
+                    },
+                    "mark": {
+                        "title": "Mark",
+                        "description": "Max mark",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 12
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Task"
+                }
+            },
+            "TaskComplete": {
+                "title": "Task Completes",
+                "description": "Task Completes",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "document_path": {
+                        "title": "Document path",
+                        "description": "Path of document which contain the work",
+                        "type": "string",
+                        "example": "/documents/completes/doc1.dox"
+                    },
+                    "task_id": {
+                        "title": "Task ID",
+                        "description": "Id of task",
+                        "type": "integer",
+                        "example": "14"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Task Completes"
+                }
+            },
+            "TaskReview": {
+                "title": "Task Review",
+                "description": "Task Reviews",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "complete_id": {
+                        "title": "Complete ID",
+                        "description": "Id of Complete task",
+                        "type": "integer",
+                        "example": "14"
+                    },
+                    "user_id": {
+                        "title": "User ID",
+                        "description": "Id of user",
+                        "type": "integer",
+                        "example": "14"
+                    },
+                    "mark": {
+                        "title": "Mark",
+                        "description": "Mark of Complete task",
+                        "type": "integer",
+                        "example": "6"
+                    },
+                    "comment": {
+                        "title": "Comment",
+                        "description": "Comment for task",
+                        "type": "string",
+                        "example": "Great work!"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Task Reviews"
+                }
+            },
             "Theory": {
                 "title": "Theory",
                 "description": "Theory",
@@ -861,6 +1360,36 @@
                 "xml": {
                     "name": "Token"
                 }
+            },
+            "ReviewTaskRequest": {
+                "title": "Review Task request",
+                "description": "Review Task request body data",
+                "required": [
+                    "complete_id",
+                    "comment",
+                    "mark"
+                ],
+                "properties": {
+                    "complete_id": {
+                        "title": "Complete ID",
+                        "description": "Id of Complete task",
+                        "type": "integer",
+                        "example": "14"
+                    },
+                    "mark": {
+                        "title": "Mark",
+                        "description": "Mark of Complete task",
+                        "type": "integer",
+                        "example": "6"
+                    },
+                    "comment": {
+                        "title": "Comment",
+                        "description": "Comment for task",
+                        "type": "string",
+                        "example": "Great work!"
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
