@@ -35,5 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/completes', array(CompleteController::class, 'list'));
     Route::get('/complete', array(CompleteController::class, 'get'));
     Route::post('/review-task', [TaskReviewController::class, 'create']);
+    Route::post('/delete-task', [TaskController::class, 'delete']);
+    Route::post('/delete-user', [GroupController::class, 'deleteUser']);
 
 });

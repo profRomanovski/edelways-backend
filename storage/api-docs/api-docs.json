@@ -508,6 +508,42 @@
                 ]
             }
         },
+        "/api/delete-user": {
+            "post": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Delete user from the group",
+                "description": "Returns success",
+                "operationId": "deleteUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "User not found in that group"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
         "/api/tasks": {
             "get": {
                 "tags": [
@@ -627,6 +663,42 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/delete-task": {
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Delete task",
+                "description": "Returns success",
+                "operationId": "deleteTask",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteGroupRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Task not found"
                     }
                 },
                 "security": [
@@ -1013,6 +1085,29 @@
                         "description": "Id of the group",
                         "type": "integer",
                         "example": "3"
+                    }
+                },
+                "type": "object"
+            },
+            "DeleteUserRequest": {
+                "title": "Delete request",
+                "description": "Delete user from group request body data",
+                "required": [
+                    "user_id",
+                    "group_id"
+                ],
+                "properties": {
+                    "group_id": {
+                        "title": "Group id",
+                        "description": "Id of the group",
+                        "type": "integer",
+                        "example": "3"
+                    },
+                    "user_id": {
+                        "title": "User id",
+                        "description": "Id of the user",
+                        "type": "integer",
+                        "example": "4"
                     }
                 },
                 "type": "object"

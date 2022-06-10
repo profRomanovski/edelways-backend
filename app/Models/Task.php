@@ -40,7 +40,8 @@ class Task extends Model
         'author',
         'date',
         'isAdmin',
-        'complete'
+        'complete',
+        'comments'
     ];
 
     protected $hidden = [
@@ -90,5 +91,46 @@ class Task extends Model
         } else {
             return false;
         }
+    }
+
+    public function getCommentsAttribute()
+    {
+        $key = 1;
+        if(!$this->complete && !$this->group->isAdmin){
+            return [];
+        }
+        $comments = [];
+        if($this->group->isAdmin){
+            $completes = $this->completes()
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            $completes = $this->completes()
+                ->where(TaskComplete::USER_ID, '=', auth()->id())
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+        foreach ($completes as $complete){
+            $review = TaskReview::query()->
+                where(TaskReview::COMPLETE_ID, '=', $complete->id)
+                ->first();
+            if($review){
+                $comment = [
+                    'type' => 'review',
+                    'key' => $key,
+                    'data' => $review
+                ];
+                $comments[] = $comment;
+                $key++;
+            }
+            $comment = [
+                'type' => 'complete',
+                'key' => $key,
+                'data' => $complete,
+            ];
+            $comments[] = $comment;
+            $key++;
+        }
+        return $comments;
     }
 }

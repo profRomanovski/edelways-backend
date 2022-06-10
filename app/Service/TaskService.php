@@ -155,4 +155,11 @@ class TaskService
         $this->groupService->validate($group);
     }
 
+    public function deleteTask($id)
+    {
+        $task = Task::query()->find($id);
+        $this->validateTask($task);
+        $task->delete();
+    }
+
 }

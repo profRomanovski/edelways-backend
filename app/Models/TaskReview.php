@@ -21,4 +21,27 @@ class TaskReview extends Model
         self::COMMENT,
         self::MARK
     ];
+
+    protected $appends = [
+        'author',
+        'image'
+    ];
+
+    protected $hidden = [
+        'user'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function getAuthorAttribute()
+    {
+        return $this->user->name;
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->user->image;
+    }
 }

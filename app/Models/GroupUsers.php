@@ -21,4 +21,31 @@ class GroupUsers extends Model
         self::GROUP_ID,
         self::USER_ID
     ];
+
+    protected $appends = [
+        'userName',
+        'userEmail',
+        'userImage',
+        'date'
+    ];
+
+    public function getUserNameAttribute()
+    {
+        return User::query()->find($this->user_id)->name;
+    }
+
+    public function getUserEmailAttribute()
+    {
+        return User::query()->find($this->user_id)->email;
+    }
+
+    public function getUserImageAttribute()
+    {
+        return User::query()->find($this->user_id)->image;
+    }
+
+    public function getDateAttribute()
+    {
+        return $this->updated_at->format('H:i F j, Y');
+    }
 }

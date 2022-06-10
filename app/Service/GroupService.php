@@ -124,6 +124,20 @@ class GroupService
     /**
      * @throws Exception
      */
+    public function leftUserFromGroup($user_id, $group_id)
+    {
+        $group = Group::query()->find($group_id);
+        $this->validate($group);
+        $groupUser = GroupUsers::query()
+            ->where(GroupUsers::GROUP_ID, '=', $group_id)
+            ->where(GroupUsers::USER_ID,'=', $user_id)
+            ->first();
+        $groupUser->delete();
+    }
+
+    /**
+     * @throws Exception
+     */
     public function get($id)
     {
         $group = Group::query()->find($id);

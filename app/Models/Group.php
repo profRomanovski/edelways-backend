@@ -40,8 +40,12 @@ class Group extends Model
     protected $appends = [
         'users',
         'author',
+        'authorImage',
+        'authorEmail',
         'isAdmin',
-        'canAccess'
+        'canAccess',
+        'userList',
+        'date'
     ];
 
     public function user()
@@ -51,12 +55,24 @@ class Group extends Model
 
     public function getUsersAttribute(): int
     {
-        return 12;
+        return GroupUsers::query()
+            ->where(GroupUsers::GROUP_ID, '=', $this->id)
+            ->count() + 1;
     }
 
     public function getAuthorAttribute()
     {
         return $this->user->name;
+    }
+
+    public function getAuthorEmailAttribute()
+    {
+        return $this->user->email;
+    }
+
+    public function getAuthorImageAttribute()
+    {
+        return $this->user->image;
     }
 
     public function getIsAdminAttribute(): bool
@@ -66,6 +82,11 @@ class Group extends Model
             $isAdmin = true;
         }
         return $isAdmin;
+    }
+
+    public function getDateAttribute()
+    {
+        return $this->updated_at->format('H:i F j, Y');
     }
 
     public function getCanAccessAttribute(): bool
@@ -81,4 +102,10 @@ class Group extends Model
         return $canAccess;
     }
 
+    public function getUserListAttribute()
+    {
+        return GroupUsers::query()
+        ->where(GroupUsers::GROUP_ID, '=', $this->id)
+        ->get();
+    }
 }

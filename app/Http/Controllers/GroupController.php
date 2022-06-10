@@ -246,4 +246,44 @@ class GroupController extends Controller
             return response( $ex->getMessage(), 404);
         }
     }
+
+    /**
+     * @OA\Post(
+     *      path="/api/delete-user",
+     *      operationId="deleteUser",
+     *      tags={"Groups"},
+     *      summary="Delete user from the group",
+     *      description="Returns success",
+     *      security={{"bearer_token":{}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/DeleteUserRequest")
+     *      ),
+     *     @OA\Response(
+     *        response=200,
+     *        description="Success",
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="User not found in that group"
+     *      ),
+     * )
+     */
+    public function deleteUser(Request $request)
+    {
+        $data = $request->validate([
+            'user_id' => 'required|integer|min:1',
+            'group_id' => 'required|integer|min:1',
+        ]);
+        try{
+            $this->groupService->leftUserFromGroup($data['user_id'], $data['group_id']);
+        } catch (Exception $ex){
+            return response( $ex->getMessage(), 404);
+        }
+        return response('success');
+    }
 }

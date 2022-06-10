@@ -150,4 +150,43 @@ class TaskController extends Controller
             return response( $ex->getMessage(), 404);
         }
     }
+
+    /**
+     * @OA\Post(
+     *      path="/api/delete-task",
+     *      operationId="deleteTask",
+     *      tags={"Tasks"},
+     *      summary="Delete task",
+     *      description="Returns success",
+     *      security={{"bearer_token":{}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/DeleteGroupRequest")
+     *      ),
+     *     @OA\Response(
+     *        response=200,
+     *        description="Success",
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Task not found"
+     *      ),
+     * )
+     */
+    public function delete(Request $request)
+    {
+        $data = $request->validate([
+            'id' => 'required|integer|min:1',
+        ]);
+        try{
+            $this->taskService->deleteTask($data['id']);
+        } catch (Exception $ex){
+            return response( $ex->getMessage(), 404);
+        }
+        return response('success');
+    }
 }
